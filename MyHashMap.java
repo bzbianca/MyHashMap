@@ -51,16 +51,10 @@ public class MyHashMap<K, V> {
      * @return null if no existing entry found
      */
     public V put(K key, V value) {
-        // TODO Step 1: compute the index using hash(key)
         int index = hash(key);
-        // TODO Step 2: if table[index] is null, create a new LinkedList there
         if (table[index] == null) {
             table[index] = new LinkedList<>();
         }
-        // TODO Step 3: walk the list at table[index]
-        //   -- compare keys using .equals(), not ==
-        //   -- if an entry with the same key already exists, update its value
-        //      and return the OLD value (do not increment size)
         for (Entry<K, V> entry : table[index]) { // Used AI to find the correct for condition
             if (entry.key.equals(key)) {
                 V oldValue = entry.value;
@@ -68,36 +62,20 @@ public class MyHashMap<K, V> {
                 return oldValue;
             }
         }
-        // TODO Step 4: no existing entry found -- add a new Entry to the
-        //   FRONT of the list (O(1) -- no traversal needed), increment size, return null
         table[index].addFirst(new Entry<>(key, value));
         size++;
         return null;
     }
-
-    // ── get ───────────────────────────────────────────────────────────────
-    /**
-     * Reads for specific keys and returns the value
-     *
-     * @param key key of hashmap
-     * @return value of a matching key
-     * @return null if key was not in the list
-     */
     public V get(K key) {
-        // TODO Step 1: compute the index using hash(key)
         int index = hash(key);
-        // TODO Step 2: if table[index] is null, return null (key not present)
         if (table[index] == null) {
             return null;
         }
-        // TODO Step 3: walk the list at table[index]
-        //   -- if an entry with a matching key is found, return its value
         for (Entry<K, V> entry : table[index]) {
             if (entry.key.equals(key)) {
                 return entry.value;
             }
         }
-        // TODO Step 4: key was not in the list -- return null
         return null;
     }
 
@@ -110,10 +88,6 @@ public class MyHashMap<K, V> {
      * @return false if key does not find a match or is null
      */
     public boolean containsKey(K key) {
-        // TODO: return true if the key exists in the map, false otherwise
-        // Hint: get(key) returns null when the key is not present --
-        //   but what if a key IS present and its value is null?
-        //   Walk the list directly to be safe.
         int index = hash(key);
         if (table[index] == null) {
             return false;
@@ -135,19 +109,10 @@ public class MyHashMap<K, V> {
      * @return null if no existing entry found
      */
     public V remove(K key) {
-        // TODO Step 1: compute the index using hash(key)
         int index = hash(key);
-        // TODO Step 2: if table[index] is null, return null (nothing to remove)
         if (table[index] == null) {
             return null;
         }
-        // TODO Step 3: walk the list at table[index]
-        //   -- compare keys using .equals(), not ==
-        //   -- if an entry with a matching key is found:
-        //      remove it from the list, decrement size, return its value
-        //   -- You cannot remove from a list inside a for-each loop.
-        //      Use an iterator: Iterator<Entry<K,V>> it = table[index].iterator()
-        //      then it.remove() when you find the match.
         Iterator<Entry<K, V>> it = table[index].iterator();
 
         while (it.hasNext()) {
@@ -160,7 +125,6 @@ public class MyHashMap<K, V> {
                 return oldValue;
             }
         }
-        // TODO Step 4: key was not found -- return null
 
         return null;
     }
